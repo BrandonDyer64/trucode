@@ -130,3 +130,45 @@ run = function() {
 };
 
 intervalId = setInterval(run, 1000 / fps);
+
+systemConsole = document.getElementById("console");
+	println = function(string) {
+		oldString = systemConsole.innerHTML;
+		newString = oldString + "\n>>> " + string;
+		systemConsole.innerHTML = newString;
+		document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+	}
+	sudoPrintln = function(string) {
+		console.log(string);
+		oldString = systemConsole.innerHTML;
+		newString = oldString + "\n" + string;
+		systemConsole.innerHTML = newString;
+		document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+	}
+	clearPrint = function() {
+		systemConsole.innerHTML = "";
+		document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+	}
+	runcode = function() {
+		script = myCodeMirror.getValue();
+		try {
+			var document = undefined;
+			var window = undefined;
+			eval("var eval = undefined;" + script);
+			sudoPrintln("Running...");
+			init();
+		} catch (e) {
+			sudoPrintln(e);
+			return;
+		}
+		running = false;
+		pausecode();
+	}
+	pausecode = function() {
+		running = !running;
+		if (running) {
+			document.getElementById("buttonPause").innerHTML = "Pause";
+		} else {
+			document.getElementById("buttonPause").innerHTML = "Play";
+		}
+	}
