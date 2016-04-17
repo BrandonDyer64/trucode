@@ -54,6 +54,7 @@
 					<button onclick="runcode();">Run</button>
 					<button id="buttonPause" onclick="pausecode();">Pause</button>
 					<button id="buttonStep" onclick="draw();">Step</button>
+					<button id="buttonStep" onclick="window.location.href='?tut=' + (Number(QUERY_STRING.tut) + 1);">Next Tutorial</button>
 					<input id="project_title" type="text" name="title" value="Untitled Project" placeholder="Title"></input>
 				</div>
 				<canvas id="canvas" width="640" height="400" class="shade" style="background-color:#000;margin-left:10px;border-radius:10px;"></canvas>
