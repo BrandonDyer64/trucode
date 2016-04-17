@@ -8,6 +8,8 @@ var mouseB = [{}];
 var mouseX = 0;
 var mouseY = 0;
 
+var enableClear = true;
+
 var SCREEN_WIDTH = 640;
 var SCREEN_HEIGHT = 400;
 Object.freeze(SCREEN_WIDTH);
@@ -116,7 +118,8 @@ run = function() {
 	}
 	frame++;
 	if (running) {
-		clearScreen();
+		if (enableClear)
+			clearScreen();
 		try {
 			draw();
 			flashFrame = !flashFrame;
@@ -132,43 +135,66 @@ run = function() {
 intervalId = setInterval(run, 1000 / fps);
 
 systemConsole = document.getElementById("console");
-	println = function(string) {
-		oldString = systemConsole.innerHTML;
-		newString = oldString + "\n>>> " + string;
-		systemConsole.innerHTML = newString;
-		document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+println = function(string) {
+	oldString = systemConsole.innerHTML;
+	newString = oldString + "\n>>> " + string;
+	systemConsole.innerHTML = newString;
+	document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+}
+sudoPrintln = function(string) {
+	console.log(string);
+	oldString = systemConsole.innerHTML;
+	newString = oldString + "\n" + string;
+	systemConsole.innerHTML = newString;
+	document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+}
+clearPrint = function() {
+	systemConsole.innerHTML = "";
+	document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+}
+runcode = function() {
+	clearScreen();
+	script = myCodeMirror.getValue();
+	try {
+		var document = undefined;
+		var window = undefined;
+		eval("var eval = undefined;" + script);
+		sudoPrintln("Running...");
+		init();
+	} catch (e) {
+		sudoPrintln(e);
+		return;
 	}
-	sudoPrintln = function(string) {
-		console.log(string);
-		oldString = systemConsole.innerHTML;
-		newString = oldString + "\n" + string;
-		systemConsole.innerHTML = newString;
-		document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+	running = false;
+	pausecode();
+}
+pausecode = function() {
+	running = !running;
+	if (running) {
+		document.getElementById("buttonPause").innerHTML = "Pause";
+	} else {
+		document.getElementById("buttonPause").innerHTML = "Play";
 	}
-	clearPrint = function() {
-		systemConsole.innerHTML = "";
-		document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
-	}
-	runcode = function() {
-		script = myCodeMirror.getValue();
-		try {
-			var document = undefined;
-			var window = undefined;
-			eval("var eval = undefined;" + script);
-			sudoPrintln("Running...");
-			init();
-		} catch (e) {
-			sudoPrintln(e);
-			return;
-		}
-		running = false;
-		pausecode();
-	}
-	pausecode = function() {
-		running = !running;
-		if (running) {
-			document.getElementById("buttonPause").innerHTML = "Pause";
-		} else {
-			document.getElementById("buttonPause").innerHTML = "Play";
-		}
-	}
+}
+
+// Returns a random number between 0 (inclusive) and 1 (exclusive)
+function getRandom() {
+  return Math.random();
+}
+
+// Returns a random number between min (inclusive) and max (exclusive)
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+// Returns a random integer between min (included) and max (excluded)
+// Using Math.round() will give you a non-uniform distribution!
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+// Returns a random integer between min (included) and max (included)
+// Using Math.round() will give you a non-uniform distribution!
+function getRandomIntInclusive(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
