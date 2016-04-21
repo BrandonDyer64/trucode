@@ -1,11 +1,13 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="../main_style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="cm/lib/codemirror.js"></script>
 	<link rel="stylesheet" href="cm/lib/codemirror.css">
 	<link rel="stylesheet" href="cm/theme/base16-dark.css">
 	<script src="cm/mode/javascript/javascript.js"></script>
 	<script src="../vars.js" type="text/javascript"></script>
+	<script src="data.js" type="text/javascript"></script>
 	<script src="filer.js" type="text/javascript"></script>
 	<title>Code</title>
 </head>
@@ -15,9 +17,10 @@
 			<div>
 				<div class="runbutts" style="width:640;background-color:#111;margin:10px;">
 					<div class="dropdown">
+						<button id="home" onclick="window.location.href='../'">Home</button>
 						<button id="button_file" onclick="file()" class="dropbtn">File</button>
 						<div id="fileDropdown" class="dropdown-content">
-							<a href="#" onclick="saveCode()">Save</a>
+							<a onclick="saveCode()">Save</a>
 							<a id="project_page" href="#">Project Page</a>
 							<script type="text/javascript">
 							var projectPage = document.getElementById('project_page');
@@ -55,7 +58,13 @@
 					<button id="buttonPause" onclick="pausecode();">Pause</button>
 					<button id="buttonStep" onclick="draw();">Step</button>
 					<button id="buttonStep" onclick="window.location.href='?tut=' + (Number(QUERY_STRING.tut) + 1);">Next Tutorial</button>
-					<input id="project_title" type="text" name="title" value="Untitled Project" placeholder="Title"></input>
+					<input id="project_title" type="text" name="title" value="Untitled Project" placeholder="Title" style="float: right;"></input>
+					<script>
+					if (QUERY_STRING.proj != undefined) {
+						var title = QUERY_STRING.proj.split('@')[1];
+						document.getElementById('project_title').value = title;
+					}
+					</script>
 				</div>
 				<canvas id="canvas" width="640" height="400" class="shade" style="background-color:#000;margin-left:10px;border-radius:10px;"></canvas>
 			</div>
@@ -87,6 +96,18 @@ draw = function() {
 				indentUnit: 4
 			});
 			</script>
+			<script>
+			if (QUERY_STRING.proj != undefined) {
+				$.post(HOST + '/get_project.php',{
+					query: QUERY_STRING.proj
+				},
+				function(data) {
+					console.log(data);
+					var json = JSON.parse(data);
+					myCodeMirror.setValue(json.code);
+				});
+			}
+			</script>
 			<div>
 			<video id="video" autoplay width="320" height="240" controls style="">
 				<source id="video_source" src="tutorials/1.mkv" type="video/webm"></source>
@@ -115,3 +136,7 @@ draw = function() {
 	</div>
 </body>
 </html>
+<script>
+runcode();
+draw();
+</script>

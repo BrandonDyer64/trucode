@@ -1,0 +1,49 @@
+Welcome to TruCode
+Printing | println sudoPrintln
+Getting Player Input | mouseX mouseY
+Maths | + - * / %
+Increment Operators | ++ --
+If Statements | if
+Logical Operators | && ||
+Keyboard Polling | keys
+Switching | switch case
+While Loop | while
+Functions | function
+Returning | return
+OOP | new function
+Constructor | this
+Methods | this function
+Prototypes | prototype
+Nested If | if if
+Else If | if else if
+Conditional Operators | == > < >= <=
+Binary | 1 0
+Advanced Math | << >> & |
+For Loops | for
+Do While Loops | do while
+Random Numbers (Engine) | getRandomInt
+Arrays | []
+Summate
+Enhanced For Loop | for in
+Factories
+To String | toString
+Enumeration (Engine) | Enum
+Object/Dictionary | {A:a,B:b}
+Drawing | fillRect Color
+Mouse Events | mousemove mousedown
+Polymorphism | AbstractClass Abstract Extend Ovprintln(z--);erride
+Buttons (Engine) | Button callback
+Check Boxes (Engine) | CheckBox
+Pretty Classes
+Screening
+Space Game : Title Screen
+Space Game : Player
+Space Game : GameObject
+Space Game : Asteroid
+Space Game : Bullet
+Space Game : Bullet Detection
+Space Game : Score
+Space Game : Death
+
+
+

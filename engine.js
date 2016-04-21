@@ -90,6 +90,57 @@ Color = function(r,g,b,a) {
 	this.a = a;
 }
 
+Button = function(x,y,width,height,background,text,color,callback) {
+	this.x = x;
+	this.y = y;
+	this.width = width;
+	this.height = height;
+	this.background = background;
+	this.text = text;
+	this.color = color;
+	this.draw = function() {
+		fillRect(this.x,this.y,this.width,this.height,background);
+		drawText(x,y,text,color);
+		if (this.isClicked()) {
+			callback();
+		}
+	}
+	this.isClicked = function() {
+		if (mouseB[0]) {
+			if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
+
+CheckBox = function(x,y) {
+	this.x = x;
+	this.y = y;
+	this.width = 16;
+	this.height = 16;
+	this.padding = 2;
+	this.checked = false;
+	this.background = Color.DARK_GRAY;
+	this.uncheckedColor = Color.BLACK;
+	this.checkedColor = Color.LIGHT_GRAY;
+	this.callback = function(checked){};
+	this.isWasMouseClicked = false;
+	this.draw = function() {
+		if (mouseB[0]) {
+			if (!isWasMouseClicked) {
+				if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height) {
+					checked = !checked;
+				}
+			}
+			isWasMouseClicked = true;
+		}
+		fillRect(x,y,width,height,background);
+		fillRect(x+padding,y+padding,width-padding*2,height-padding*2,checked?checkedColor:uncheckedColor);
+	}
+}
+
 Color.BLACK = new Color(0,0,0,255);
 Color.DARK_GRAY = new Color(50,50,50,255);
 Color.GRAY = new Color(120,120,120,255);
@@ -158,6 +209,7 @@ runcode = function() {
 	try {
 		var document = undefined;
 		var window = undefined;
+		var setInterval = undefined;
 		eval("var eval = undefined;" + script);
 		sudoPrintln("Running...");
 		init();
@@ -198,3 +250,23 @@ function getRandomInt(min, max) {
 function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function Enum(constantsList) {
+    for (var i in constantsList) {
+        this[constantsList[i]] = i;
+    }
+}
+
+Extend = function(x) {
+}
+
+Override = function() {	
+}
+
+Abstact = function() {
+}
+
+AbstractClass = function() {
+}
+
+
