@@ -2,7 +2,7 @@ $(function() {
 	$(document).on('submit', '#register', function() {
 		var username = $.trim($("#username").val());
 		var password = $.trim($("#password").val());
-		var passconf = $.trim($("#username").val());
+		var passconf = $.trim($("#passconf").val());
 		var firstname = $.trim($("#firstname").val());
 		var lastname = $.trim($("#lastname").val());
 		console.log("posting");

@@ -1,7 +1,9 @@
+
+importPackage(java.lang)
+
 var frame = 0;
 fps = 30;
-var canvas = document.getElementById("canvas");
-var g = canvas.getContext("2d");
+var g = function(){}
 g.font = "30px Arial";
 var keys = [{}];
 var mouseB = [{}];
@@ -19,39 +21,6 @@ var running = false;
 
 var backgroundColor;
 
-// Input functions
-
-onmousemove = function(event) {
-	mouseX = event.clientX - canvas.getBoundingClientRect().left;
-	mouseY = event.clientY - canvas.getBoundingClientRect().top;
-	if (running)
-		mousemove(mouseX, mouseY);
-}
-
-onkeydown = function(event) {
-	keys[String.fromCharCode(event.keyCode)] = true;
-}
-
-onkeyup = function(event) {
-	keys[String.fromCharCode(event.keyCode)] = false;
-}
-
-onmousedown = function(event) {
-	mouseB[event.which] = true;
-	if (running)
-		mousedown(event.which);
-}
-
-onmouseup = function(event) {
-	mouseB[event.which] = false;
-	if (running)
-		mouseup(event.which);
-}
-
-onscroll = function(event) {
-
-}
-
 // Functions to be overriden
 
 draw = function() {}
@@ -67,20 +36,12 @@ mouseup = function(button) {}
 // Graphics
 
 clearScreen = function() {
-	color = backgroundColor;
-	g.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
-	g.fillRect(0,0,canvas.getBoundingClientRect().right, 
-		canvas.getBoundingClientRect().bottom);
 }
 
 fillRect = function(x,y,width,height,color) {
-	g.fillStyle = "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
-	g.fillRect(x,y,width,height);
 }
 
 drawText = function(x,y,string,color) {
-	g.fillStyle = "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
-	g.fillText(string,x,y);
 }
 
 Color = function(r,g,b,a) {
@@ -185,26 +146,18 @@ run = function() {
 
 intervalId = setInterval(run, 1000 / fps);
 
-systemConsole = document.getElementById("console");
 println = function(string) {
-	oldString = systemConsole.innerHTML;
-	newString = oldString + "\n>>> " + string;
-	systemConsole.innerHTML = newString;
-	document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+	System.out.println('>>> ' + string);
 }
+
 sudoPrintln = function(string) {
-	console.log(string);
-	oldString = systemConsole.innerHTML;
-	newString = oldString + "\n" + string;
-	systemConsole.innerHTML = newString;
-	document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+	System.out.println(string);
 }
+
 clearPrint = function() {
-	systemConsole.innerHTML = "";
-	document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
 }
-runcode = function() {
-	script = myCodeMirror.getValue();
+
+runcode = function(script) {
 	try {
 		var document = undefined;
 		var window = undefined;
@@ -255,18 +208,6 @@ function Enum(constantsList) {
     for (var i in constantsList) {
         this[constantsList[i]] = i;
     }
-}
-
-Extend = function(x) {
-}
-
-Override = function() {	
-}
-
-Abstact = function() {
-}
-
-AbstractClass = function() {
 }
 
 

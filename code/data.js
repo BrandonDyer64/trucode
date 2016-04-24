@@ -1,1 +1,1 @@
-var HOST = "http://localhost/trucode-api";
+var HOST = "http://192.168.0.14/trucode-api";
